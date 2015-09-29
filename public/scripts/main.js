@@ -81,19 +81,19 @@ function request(url, method, data) {
 
 appendAnimals: function(animals) {
 	$.each(animals, function(index, animal) {
-		animalTemplate = '<h1 class="animal-name">' + animal.name + '</h1>';
-		animalTemplate += '<ul class="animal-details">';
-		animalTemplate += '<li class="breed">' + animal.breed + '</li>';
-		animalTemplate += '<li class="dob">' + animal.dob + '</li>';
-		animalTemplate += '<li class="gender">' + animal.gender + '</li>';
-		animalTemplate += '<li class="family">' + animal.family + '</li>';
-		animalTemplate += '</ul>';
-
-   $('#show-animals').append(animalTemplate);
+		var availableActions = $.extend(true, {}, Animal.actions);
+    availableAction = Object.keys(Animal.availableActions(animal.status))[0];
+    animalTemplate = "<tr id='" + animal._id + "'>";
+    animalTemplate += "<td>" + animal.name + "</td>";
+    animalTemplate += "<td>" + animal.breed + "</td>";
+    animalTemplate += "<td>" + (new Date(animal.dob).toDateString()) + "</td>";
+    animalTemplate += "<td>" + animal.gender + "</td>";
+    animalTemplate += "<td>" + animal.family + "</td>";
+    animalTemplate += "<td class='js-update' data-action=" + availableAction + "><a href='#'>" + availableAction + "</a></td>";
+    animalTemplate += "<td><button class='js-delete' data-id=" + animal._id + ">Kill!</button></td>";
+    animalTemplate += "</tr>";
+    $("#show-animals").append(animalTemplate);
     })
-    // .done(function() {
-    //   $('#create-animal').trigger('reset');
-    // })
 	})
 }
 
