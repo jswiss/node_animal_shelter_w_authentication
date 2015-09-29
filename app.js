@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
-var debug = require("debug");
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+var express        = require('express');
+var path           = require('path');
+var debug          = require("debug");
+var logger         = require('morgan');
+var mongoose       = require('mongoose');
+var bodyParser     = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
-var app = express();
-var router = express.Router();
+var app            = express();
+var router         = express.Router();
 
-var Animal = require('./models/animals')
+var Animal         = require('./models/animals')
 
 var moongoose = require('mongoose');
 moongoose.connect('mongodb://localhost/animal-shelter');
