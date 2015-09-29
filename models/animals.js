@@ -7,9 +7,19 @@ var animalSchema = new mongoose.Schema({
 	gender: String,
 	family: String,
 	status: String,
-	createdAt: Date,
 	updatedAt: {type: Date, default: Date.now }
 });
+
+animalSchema.methods.availableActions = function(status) {
+ var actions = {
+    adopt: "adopted",
+    abandon: "abadoned"
+  };
+  $.each(actions, function(x,y){
+      if (y === status) delete actions[x];
+      return actions;
+  })
+}
 
 var Animal = mongoose.model('Animal', animalSchema);
 

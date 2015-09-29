@@ -14,7 +14,7 @@
     "express": "~4.13.1",
     "express-ejs-layouts": "1.1.0",
     "method-override": "^2.3.4",
-    "mongoose": "^4.0.7",
+    "mongoose": "^4.1.9",
     "mongoose-seed": "^0.1.5",
     "morgan": "~1.6.1"
   },

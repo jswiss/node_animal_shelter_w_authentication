@@ -1,7 +1,7 @@
 var seeder = require('mongoose-seed');
 
 	// Connect to MongoDB via Mongoose 
-seeder.connect('mongodb://localhost/animal-shelter', function() {
+seeder.connect('mongodb://localhost/animal-shelter-sequel', function() {
     
     // Load Mongoose models 
     seeder.loadModels([

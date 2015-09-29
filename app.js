@@ -10,8 +10,8 @@ var router         = express.Router();
 
 var Animal         = require('./models/animals')
 
-var moongoose = require('mongoose');
-moongoose.connect('mongodb://localhost/animal-shelter');
+var moongoose      = require('mongoose');
+moongoose.connect('mongodb://localhost/animal-shelter-2');
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,14 +25,22 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 //root path
-app.get('/', function(req, res){
-  res.render(path.join(__dirname + '/views/index.ejs'));
+app.get('/signup', function(req, res){
+  res.render(path.join(__dirname + '/views/signup'));
+  userObject.save(function(err, user) {
+  if (err) {
+    if (err.code === 11000) {
+      res.status(401).send({ message: 'This email is invalid. Please enter a valid email.'})
+    }
+    return res.status(401).send(err.errmsg)
+  } else {
+    return res.status(200).send({ message: 'User created!' })
+  }
+})
 })
 
 //animals index path
-app.get('/animals', function(req, res) {
-  // res.sendFile(path.join(__dirname + './views/index.html'));
-  
+app.get('/animals', function(req, res) {  
   Animal.find({}, function(err, animals) {
   	if (err) console.log(err);
   	res.json(animals);
@@ -42,6 +50,7 @@ app.get('/animals', function(req, res) {
 //create
 app.post('/animals', function(req, res) {
 	console.log(req.body);
+
   var animal = Animal({
   	name: req.body.name,
   	breed: req.body.breed,
@@ -49,7 +58,6 @@ app.post('/animals', function(req, res) {
   	gender: req.body.gender,
   	family: req.body.family,
   	status: req.body.status,
-  	createdAt: req.body.createdAt
   	})
 
   animal.save(function(err, createdAnimal) {
@@ -68,7 +76,7 @@ app.put("/animals/:id", function(req, res) {
 })
 
 //Delete
-app.delete("/animals/:id", function (req, res) {
+app.delete("/:id", function (req, res) {
 	console.log(req.params.id);
 	Animal.remove({_id: req.params.id}, function(err, removedAnimal) {
 		console.log("Delete animal");
